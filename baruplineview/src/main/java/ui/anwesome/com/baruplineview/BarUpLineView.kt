@@ -103,6 +103,29 @@ class BarUpLineView (ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+
+    data class Renderer(var view : BarUpLineView) {
+
+        private val barUpLine : BarUpLine = BarUpLine(0)
+
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            barUpLine.draw(canvas, paint)
+            animator.animate {
+                barUpLine.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            barUpLine.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
 
 fun Canvas.drawRectLine(w :Float, h : Float, scales : Array<Float>, paint : Paint) {
