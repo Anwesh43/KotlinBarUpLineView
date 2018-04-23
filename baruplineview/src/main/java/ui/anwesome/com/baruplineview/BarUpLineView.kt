@@ -31,7 +31,7 @@ class BarUpLineView (ctx : Context) : View(ctx) {
 
     data class State (var prevScale : Float = 0f, var dir : Float = 0f, var j : Int = 0, var delay : Int = 0) {
 
-        val scales : Array<Float> = arrayOf(0f, 0f, 0f)
+        val scales : Array<Float> = arrayOf(0f, 0f, 0f, 0f)
 
         val MAX_DELAY : Int = 10
         fun update(stopcb : (Float) -> Unit) {
@@ -152,13 +152,13 @@ fun Canvas.drawRectLine(w :Float, h : Float, scales : Array<Float>, paint : Pain
     paint.style = Paint.Style.FILL_AND_STROKE
     for (i in 0..1) {
         save()
-        translate(0f, -h/2 * (1 - 2 * i) * scales[2])
-        rotate(-90f * (1 - scales[0]))
-        val x : Float = w * scales[1] * (1 - 2 * i)
+        translate(0f, -h/2 * (1 - 2 * i) * scales[3])
+        rotate(-90f * (1 - scales[1]))
+        val x : Float = w * scales[2] * (1 - 2 * i)
         val path : Path = Path()
         path.moveTo(0f, 0f)
-        path.lineTo(0f, h * (1 - 2 * i))
-        path.lineTo(x, h * (1 - 2 * i))
+        path.lineTo(0f, h * (1 - 2 * i) * scales[0])
+        path.lineTo(x, h * (1 - 2 * i) * scales[0])
         path.lineTo(x, 0f)
         path.lineTo(0f, 0f)
         drawPath(path, paint)
