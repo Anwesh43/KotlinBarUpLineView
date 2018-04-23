@@ -80,4 +80,45 @@ class BarUpLineView (ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class BarUpLine (var i : Int, val state : State = State()) {
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w : Float = canvas.width.toFloat()
+            val h : Float = canvas.height.toFloat()
+            paint.color = Color.parseColor("#3949AB")
+            paint.strokeWidth = Math.min(w, h) / 60
+            paint.strokeCap = Paint.Cap.ROUND
+            canvas.save()
+            canvas.translate(w/2, h/2)
+            canvas.drawRectLine(w/3, h/10, state.scales, paint)
+            canvas.restore()
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+    }
+}
+
+fun Canvas.drawRectLine(w :Float, h : Float, scales : Array<Float>, paint : Paint) {
+    paint.style = Paint.Style.FILL_AND_STROKE
+    for (i in 0..1) {
+        save()
+        translate(0f, -h/2 * (1 - 2 * i) * scales[2])
+        rotate(-90f * (1 - scales[0]))
+        val x : Float = w * scales[1]
+        val path : Path = Path()
+        path.moveTo(0f, 0f)
+        path.lineTo(0f, h * (1 - 2 * i))
+        path.lineTo(x, h * (1 - 2 * i))
+        path.lineTo(x, 0f)
+        path.lineTo(0f, 0f)
+        drawPath(path, paint)
+        restore()
+    }
 }
