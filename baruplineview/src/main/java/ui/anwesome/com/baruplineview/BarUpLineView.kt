@@ -4,6 +4,7 @@ package ui.anwesome.com.baruplineview
  * Created by anweshmishra on 23/04/18.
  */
 
+import android.app.Activity
 import android.content.*
 import android.graphics.*
 import android.view.View
@@ -126,6 +127,14 @@ class BarUpLineView (ctx : Context) : View(ctx) {
             barUpLine.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : BarUpLineView {
+            val view : BarUpLineView = BarUpLineView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
