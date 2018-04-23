@@ -145,7 +145,7 @@ fun Canvas.drawRectLine(w :Float, h : Float, scales : Array<Float>, paint : Pain
         save()
         translate(0f, -h/2 * (1 - 2 * i) * scales[2])
         rotate(-90f * (1 - scales[0]))
-        val x : Float = w * scales[1]
+        val x : Float = w * scales[1] * (1 - 2 * i)
         val path : Path = Path()
         path.moveTo(0f, 0f)
         path.lineTo(0f, h * (1 - 2 * i))
